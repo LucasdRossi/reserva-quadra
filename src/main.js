@@ -3,18 +3,20 @@ require("dotenv").config();
 const cron = require("node-cron");
 const reservaQuadra = require("./reservaQuadra");
 
-const CPF = process.env.CPF;
+const CPFS = process.env.CPFS;
 const ENVIRONMENT = process.env.ENVIRONMENT;
 
 if (ENVIRONMENT === "development") {
-  reservaQuadra(CPF);
+  const parsedCPFs = CPFS.split(",").map((cpf) => cpf.trim());
+
+  reservaQuadra(parsedCPFs);
 } else if (ENVIRONMENT === "production") {
   // Every Sunday 00:01
   cron.schedule(
     "1 0 * * 0",
     () => {
       console.log(`Executando tarefa agendada...`);
-      reservaQuadra(CPF);
+      reservaQuadra(parsedCPFs);
     },
     {
       scheduled: true,

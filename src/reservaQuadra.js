@@ -6,13 +6,19 @@ const QUADRA_POLIESPORTIVA = 3131;
 const URL = "https://buscaquadras.com.br/actions/locacoes_acoes.php";
 const HORARIOS = ["18:00,18:30", "19:00,19:30"];
 
-module.exports = async function reservaQuadra(cpf) {
+module.exports = async function reservaQuadra(cpfs = []) {
+  if (cpfs.length !== 5) {
+    throw new Error("É necessário informar 5 CPFs!");
+  }
+
   const today = new Date();
 
   let day = dateFns.addWeeks(today, 1);
 
   for (let i = 0; i < 5; i++) {
     day = dateFns.addDays(day, 1);
+
+    const cpf = cpfs[i]
 
     if (dateFns.isWeekend(day)) {
       break;
