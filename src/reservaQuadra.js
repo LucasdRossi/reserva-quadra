@@ -65,7 +65,7 @@ module.exports = async function reservaQuadra(cpfs = []) {
       })
         .then((res) => {
           if (res.ok) {
-            console.log("Reserva realizada com sucesso!");
+            console.log(`Reserva realizada com sucesso para o CPF: ${cpf}`);
           }
         })
         .catch((err) => {
